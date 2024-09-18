@@ -67,6 +67,7 @@ const LoginScreen: React.FC = () => {
                 label="URL"
                 name="url"
                 placeholder="https://www.example.com"
+                isUrlField // Pass the prop for URL-specific behavior
               />
               <InputField
                 label="Username / Email"
@@ -135,7 +136,7 @@ const styles = StyleSheet.create({
     marginBottom: 30,
   },
   loginButton: {
-    backgroundColor: "#007aff",
+    backgroundColor: "#2f50c1",
     paddingVertical: 15,
     borderRadius: 8,
     alignItems: "center",
@@ -143,7 +144,7 @@ const styles = StyleSheet.create({
     marginBottom: 40,
   },
   disabledButton: {
-    backgroundColor: "#d3d3d3",
+    backgroundColor: "#eae7f2",
     marginBottom: 40,
   },
   loginButtonText: {
@@ -152,7 +153,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   disabledButtonText: {
-    color: "#a1a1a1",
+    color: "#a7a3b3",
   },
 });
 
