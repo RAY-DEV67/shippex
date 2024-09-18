@@ -6,22 +6,22 @@ import { Ionicons } from "@expo/vector-icons";
 const Navbar: React.FC = () => {
   return (
     <View style={styles.navbar}>
-      <TouchableOpacity>
+      <TouchableOpacity style={styles.navButton}>
         <Ionicons name="cube-outline" size={24} color="blue" />
         <Text style={styles.navText}>Shipments</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity>
+      <TouchableOpacity style={styles.navButton}>
         <Ionicons name="barcode-outline" size={24} color="gray" />
         <Text style={styles.navText}>Scan</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity>
+      <TouchableOpacity style={styles.navButton}>
         <Ionicons name="wallet-outline" size={24} color="gray" />
         <Text style={styles.navText}>Wallet</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity>
+      <TouchableOpacity style={styles.navButton}>
         <Ionicons name="person-outline" size={24} color="gray" />
         <Text style={styles.navText}>Profile</Text>
       </TouchableOpacity>
@@ -33,8 +33,9 @@ const styles = StyleSheet.create({
   navbar: {
     flexDirection: "row",
     justifyContent: "space-between",
-    paddingHorizontal: 20,
-    paddingVertical: 10,
+    paddingHorizontal: 30,
+    paddingBottom: 30,
+    paddingTop: 20,
     borderTopWidth: 1,
     borderTopColor: "#ddd",
     backgroundColor: "#fff",
@@ -44,6 +45,12 @@ const styles = StyleSheet.create({
     color: "gray",
     textAlign: "center",
     marginTop: 4,
+  },
+  navButton: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
   },
 });
 
