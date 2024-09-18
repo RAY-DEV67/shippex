@@ -5,7 +5,7 @@ import * as Yup from "yup";
 import InputField from "../components/inputField";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { useNavigation } from "@react-navigation/native";
-import { RootStackParamList } from "../navigation/appNavigator"; // Make sure this matches your param list type
+import { RootStackParamList } from "../navigations/appNavigator";
 
 type LoginScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
