@@ -8,7 +8,7 @@ const Navbar: React.FC = () => {
     <View style={styles.navbar}>
       <TouchableOpacity style={styles.navButton}>
         <Ionicons name="cube-outline" size={24} color="blue" />
-        <Text style={styles.navText}>Shipments</Text>
+        <Text style={styles.shipmentNavText}>Shipments</Text>
       </TouchableOpacity>
 
       <TouchableOpacity style={styles.navButton}>
@@ -43,6 +43,12 @@ const styles = StyleSheet.create({
   navText: {
     fontSize: 12,
     color: "gray",
+    textAlign: "center",
+    marginTop: 4,
+  },
+  shipmentNavText: {
+    fontSize: 12,
+    color: "#2f50c1",
     textAlign: "center",
     marginTop: 4,
   },
