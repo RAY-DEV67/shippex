@@ -1,45 +1,81 @@
-import React, { useEffect } from 'react';
-import { View, Text, StyleSheet, Image } from 'react-native';
-import { StackNavigationProp } from '@react-navigation/stack';
-import { RootStackParamList } from '../navigations/appNavigator';
+import React, { useEffect, useRef } from "react";
+import { View, StyleSheet, Animated } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import { StackNavigationProp } from "@react-navigation/stack";
+import { RootStackParamList } from "../navigations/appNavigator";
 
-type SplashScreenProps = {
-  navigation: StackNavigationProp<RootStackParamList, 'Splash'>;
-};
+type LoginScreenNavigationProp = StackNavigationProp<
+  RootStackParamList,
+  "Login"
+>;
 
-const SplashScreen: React.FC<SplashScreenProps> = ({ navigation }) => {
+const SplashScreen: React.FC = () => {
+  const navigation = useNavigation<LoginScreenNavigationProp>();
+
+  // Use Animated.Value for both scale and rotation
+  const imageScale = useRef(new Animated.Value(1)).current;
+  const imageRotateX = useRef(new Animated.Value(0)).current;
+
   useEffect(() => {
-    const timer = setTimeout(() => {
-      navigation.replace('Login');
-    }, 3000); // Simulating 3s loading time
+    // Animation sequence: scaling and rotating (around X-axis for vertical flip)
+    Animated.parallel([
+      // Scaling animation (from 1 to 5)
+      Animated.timing(imageScale, {
+        toValue: 6,
+        duration: 2000, // Adjust duration if necessary
+        useNativeDriver: true,
+      }),
+      // Rotation animation (flip vertically when scale > 4)
+      Animated.timing(imageRotateX, {
+        toValue: 1, // Rotation of 180 degrees (flip upside down vertically)
+        duration: 1000, // Rotate during the second half of the zoom
+        delay: 900, // Delay the flip to start halfway through zoom
+        useNativeDriver: true,
+      }),
+    ]).start();
 
-    return () => clearTimeout(timer);
-  }, [navigation]);
+    // Navigate to the Login screen after animation
+    setTimeout(() => {
+      navigation.replace("Login");
+    }, 1900);
+  }, []);
+
+  // Interpolating rotation around the X-axis: 0 means 0 degrees, 1 means 180 degrees (vertical flip)
+  const rotationX = imageRotateX.interpolate({
+    inputRange: [0, 1],
+    outputRange: ["0deg", "180deg"], // Rotate vertically (flip from top to bottom)
+  });
 
   return (
     <View style={styles.container}>
-      <Image source={require('../../assets/splash.png')} style={styles.logo} />
-      <Text style={styles.title}>Shipment App</Text>
+      <Animated.Image
+        source={require("../../assets/icon.png")} // Replace with your logo path
+        style={[
+          styles.logo,
+          {
+            transform: [
+              { scale: imageScale }, // Apply scale animation
+              { rotateX: rotationX }, // Apply vertical flip (card-like) animation
+            ],
+          },
+        ]}
+        resizeMode="contain"
+      />
     </View>
   );
 };
 
+export default SplashScreen;
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#fff',
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#fff", // Set your desired background color
   },
   logo: {
-    width: 100,
-    height: 100,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginTop: 20,
+    width: 150,
+    height: 150, // Adjust the size of your logo
   },
 });
-
-export default SplashScreen;
