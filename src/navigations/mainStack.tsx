@@ -15,7 +15,11 @@ const MainStack = () => {
   return (
     <Fragment>
       <Stack.Navigator initialRouteName="Shipments">
-        <Stack.Screen name="Shipments" component={ShipmentListScreen} />
+        <Stack.Screen
+          name="Shipments"
+          component={ShipmentListScreen}
+          options={{ headerShown: false }}
+        />
       </Stack.Navigator>
       <Navbar />
     </Fragment>

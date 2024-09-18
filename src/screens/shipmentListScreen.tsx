@@ -74,9 +74,7 @@ const ShipmentListScreen: React.FC = () => {
   );
 
   return (
-    // <>
-    //   <StatusBar backgroundColor="#ffffff" barStyle="light-content" />
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <View style={styles.header}>
         <Image
           source={require("../../assets/icon.png")}
@@ -119,7 +117,7 @@ const ShipmentListScreen: React.FC = () => {
         renderItem={renderShipment}
         style={styles.shipmentsList}
       />
-    </View>
+    </SafeAreaView>
   );
 };
 
