@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "task",
+    "name": "shippex",
     "slug": "task",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -18,10 +18,17 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.shippex.app"
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "92afe75a-561f-4c07-8602-cba27f457a16"
+      }
+    },
+    "owner": "boyray"
   }
 }
