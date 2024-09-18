@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
   },
   form: {
     backgroundColor: "#fff",
-    width: "90%",
+    width: "100%",
     marginTop: 32,
     display: "flex",
     flexDirection: "column",
