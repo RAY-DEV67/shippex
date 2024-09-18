@@ -1,13 +1,15 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
-import SplashScreen from "../screens/splashScreen";
-import LoginScreen from "../screens/loginScreen";
 import ShipmentListScreen from "../screens/shipmentListScreen";
+import AuthStack from "./authStack";
+import MainStack from "./mainStack";
 
 export type RootStackParamList = {
   Splash: undefined;
+  Authentication: undefined;
   Login: undefined;
   Shipments: undefined;
+  Main: undefined;
 };
 
 const Stack = createStackNavigator<RootStackParamList>();
@@ -16,12 +18,15 @@ const AppNavigator = () => {
   return (
     <Stack.Navigator initialRouteName="Splash">
       <Stack.Screen
-        name="Splash"
-        component={SplashScreen}
+        name="Authentication"
+        component={AuthStack}
         options={{ headerShown: false }}
       />
-      <Stack.Screen name="Login" component={LoginScreen} />
-      <Stack.Screen name="Shipments" component={ShipmentListScreen} />
+      <Stack.Screen
+        name="Main"
+        component={MainStack}
+        options={{ headerShown: false }}
+      />
     </Stack.Navigator>
   );
 };

@@ -13,7 +13,7 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
 
   const handleLogin = () => {
     // Add validation logic here
-    navigation.replace('Shipments');
+    navigation.replace('Main');
   };
 
   return (
