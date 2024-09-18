@@ -135,7 +135,7 @@ const styles = StyleSheet.create({
     marginBottom: 30,
   },
   loginButton: {
-    backgroundColor: "#007aff", // Regular button background
+    backgroundColor: "#007aff",
     paddingVertical: 15,
     borderRadius: 8,
     alignItems: "center",
@@ -143,16 +143,16 @@ const styles = StyleSheet.create({
     marginBottom: 40,
   },
   disabledButton: {
-    backgroundColor: "#d3d3d3", // Disabled button background color
+    backgroundColor: "#d3d3d3",
     marginBottom: 40,
   },
   loginButtonText: {
-    color: "#fff", // Regular button text color
+    color: "#fff",
     fontSize: 16,
     fontWeight: "bold",
   },
   disabledButtonText: {
-    color: "#a1a1a1", // Text color for disabled button
+    color: "#a1a1a1",
   },
 });
 
