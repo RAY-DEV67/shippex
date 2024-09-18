@@ -9,6 +9,7 @@ export type RootStackParamList = {
   Login: undefined;
   Shipments: undefined;
   Main: undefined;
+  Onboarding: undefined;
 };
 
 const Stack = createStackNavigator<RootStackParamList>();

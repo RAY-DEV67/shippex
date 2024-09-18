@@ -3,6 +3,7 @@ import { View, Text, TouchableOpacity, StyleSheet, Alert } from "react-native";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import InputField from "../components/inputField";
+import LoginButton from "../components/buttons/loginButton"; 
 import { StackNavigationProp } from "@react-navigation/stack";
 import { useNavigation } from "@react-navigation/native";
 import { RootStackParamList } from "../navigations/appNavigator";
@@ -36,7 +37,7 @@ const LoginScreen: React.FC = () => {
     // Reset the navigation stack to prevent going back to login
     navigation.reset({
       index: 0,
-      routes: [{ name: "Main" }], // Ensure 'Main' is defined in your RootStackParamList
+      routes: [{ name: "Main" }], 
     });
   };
 
@@ -75,16 +76,19 @@ const LoginScreen: React.FC = () => {
             secureTextEntry
           />
 
-          <TouchableOpacity
-            style={[
-              styles.loginButton,
-              !(isValid && dirty) && styles.disabledButton,
-            ]}
+          {/* Use the reusable LoginButton and handle disabled state */}
+          <LoginButton
             onPress={handleSubmit}
-            disabled={!(isValid && dirty)}
-          >
-            <Text style={styles.loginButtonText}>Login</Text>
-          </TouchableOpacity>
+            disabled={!(isValid && dirty)} // Disable the button if the form is not valid or dirty
+            buttonStyle={
+              !(isValid && dirty) ? styles.disabledButton : styles.loginButton // Apply different styles based on validity
+            }
+            textStyle={
+              !(isValid && dirty)
+                ? styles.disabledButtonText
+                : styles.loginButtonText
+            }
+          />
         </View>
       )}
     </Formik>
@@ -116,19 +120,22 @@ const styles = StyleSheet.create({
     marginBottom: 30,
   },
   loginButton: {
-    backgroundColor: "#007aff",
+    backgroundColor: "#007aff", // Regular button background
     paddingVertical: 15,
     borderRadius: 8,
     alignItems: "center",
     marginTop: 30,
   },
   disabledButton: {
-    backgroundColor: "#d3d3d3",
+    backgroundColor: "#d3d3d3", // Disabled button background color
   },
   loginButtonText: {
-    color: "#fff",
+    color: "#fff", // Regular button text color
     fontSize: 16,
     fontWeight: "bold",
+  },
+  disabledButtonText: {
+    color: "#a1a1a1", // Text color for disabled button
   },
 });
 

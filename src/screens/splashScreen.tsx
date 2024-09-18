@@ -6,14 +6,14 @@ import { RootStackParamList } from "../navigations/appNavigator";
 
 type LoginScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
-  "Login"
+  "Onboarding"
 >;
 
 const SplashScreen: React.FC = () => {
   const navigation = useNavigation<LoginScreenNavigationProp>();
 
   // Use Animated.Value for both scale and rotation
-  const imageScale = useRef(new Animated.Value(1)).current;
+  const imageScale = useRef(new Animated.Value(0.4)).current;
   const imageRotateX = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
@@ -21,7 +21,7 @@ const SplashScreen: React.FC = () => {
     Animated.parallel([
       // Scaling animation (from 1 to 5)
       Animated.timing(imageScale, {
-        toValue: 6,
+        toValue: 7,
         duration: 2000, // Adjust duration if necessary
         useNativeDriver: true,
       }),
@@ -34,9 +34,9 @@ const SplashScreen: React.FC = () => {
       }),
     ]).start();
 
-    // Navigate to the Login screen after animation
+    // Navigate to the Onboarding screen after animation
     setTimeout(() => {
-      navigation.replace("Login");
+      navigation.replace("Onboarding");
     }, 1900);
   }, []);
 
@@ -49,9 +49,8 @@ const SplashScreen: React.FC = () => {
   return (
     <View style={styles.container}>
       <Animated.Image
-        source={require("../../assets/icon.png")} // Replace with your logo path
+        source={require("../../assets/animate.png")}
         style={[
-          styles.logo,
           {
             transform: [
               { scale: imageScale }, // Apply scale animation
@@ -72,10 +71,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#fff", // Set your desired background color
-  },
-  logo: {
-    width: 150,
-    height: 150, // Adjust the size of your logo
+    backgroundColor: "#fff",
   },
 });
