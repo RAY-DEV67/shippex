@@ -1,9 +1,16 @@
 import React from "react";
-import { View, Text, TouchableOpacity, StyleSheet, Alert } from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  Alert,
+  SafeAreaView,
+} from "react-native";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import InputField from "../components/inputField";
-import LoginButton from "../components/buttons/loginButton"; 
+import LoginButton from "../components/buttons/loginButton";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { useNavigation } from "@react-navigation/native";
 import { RootStackParamList } from "../navigations/appNavigator";
@@ -37,7 +44,7 @@ const LoginScreen: React.FC = () => {
     // Reset the navigation stack to prevent going back to login
     navigation.reset({
       index: 0,
-      routes: [{ name: "Main" }], 
+      routes: [{ name: "Main" }],
     });
   };
 
@@ -48,48 +55,46 @@ const LoginScreen: React.FC = () => {
       onSubmit={handleLogin}
     >
       {({ handleSubmit, isValid, dirty }) => (
-        <View style={styles.container}>
-          <TouchableOpacity style={styles.cancelButton}>
-            <Text style={styles.cancelText}>Cancel</Text>
-          </TouchableOpacity>
-
-          <Text style={styles.title}>Login</Text>
-          <Text style={styles.subtitle}>
-            Please enter your First, Last name and your phone number in order to
-            register
-          </Text>
-
-          <InputField
-            label="URL"
-            name="url"
-            placeholder="https://www.example.com"
-          />
-          <InputField
-            label="Username / Email"
-            name="username"
-            placeholder="Your email"
-          />
-          <InputField
-            label="Password"
-            name="password"
-            placeholder="Password"
-            secureTextEntry
-          />
-
-          {/* Use the reusable LoginButton and handle disabled state */}
-          <LoginButton
-            onPress={handleSubmit}
-            disabled={!(isValid && dirty)} // Disable the button if the form is not valid or dirty
-            buttonStyle={
-              !(isValid && dirty) ? styles.disabledButton : styles.loginButton // Apply different styles based on validity
-            }
-            textStyle={
-              !(isValid && dirty)
-                ? styles.disabledButtonText
-                : styles.loginButtonText
-            }
-          />
-        </View>
+        <SafeAreaView style={styles.container}>
+          <View style={styles.form}>
+            <View>
+              <Text style={styles.title}>Login</Text>
+              <Text style={styles.subtitle}>
+                Please enter your First, Last name and your phone number in
+                order to register
+              </Text>
+              <InputField
+                label="URL"
+                name="url"
+                placeholder="https://www.example.com"
+              />
+              <InputField
+                label="Username / Email"
+                name="username"
+                placeholder="Your email"
+              />
+              <InputField
+                label="Password"
+                name="password"
+                placeholder="Password"
+                secureTextEntry
+              />
+            </View>
+            {/* Use the reusable LoginButton and handle disabled state */}
+            <LoginButton
+              onPress={handleSubmit}
+              disabled={!(isValid && dirty)} // Disable the button if the form is not valid or dirty
+              buttonStyle={
+                !(isValid && dirty) ? styles.disabledButton : styles.loginButton // Apply different styles based on validity
+              }
+              textStyle={
+                !(isValid && dirty)
+                  ? styles.disabledButtonText
+                  : styles.loginButtonText
+              }
+            />
+          </View>
+        </SafeAreaView>
       )}
     </Formik>
   );
@@ -100,6 +105,16 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 16,
     backgroundColor: "#fff",
+    alignItems: "center",
+  },
+  form: {
+    backgroundColor: "#fff",
+    width: "90%",
+    marginTop: 32,
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-between",
+    flex: 1,
   },
   cancelButton: {
     alignSelf: "flex-start",
@@ -110,7 +125,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   title: {
-    fontSize: 28,
+    fontSize: 40,
     fontWeight: "bold",
     marginBottom: 10,
   },
@@ -125,9 +140,11 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     alignItems: "center",
     marginTop: 30,
+    marginBottom: 40,
   },
   disabledButton: {
     backgroundColor: "#d3d3d3", // Disabled button background color
+    marginBottom: 40,
   },
   loginButtonText: {
     color: "#fff", // Regular button text color

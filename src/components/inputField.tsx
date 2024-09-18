@@ -20,7 +20,6 @@ const InputField: React.FC<InputFieldProps> = ({
 
   return (
     <View style={styles.inputContainer}>
-      <Text style={styles.label}>{label}</Text>
       <TextInput
         style={[
           styles.input,
@@ -41,7 +40,7 @@ const InputField: React.FC<InputFieldProps> = ({
 
 const styles = StyleSheet.create({
   inputContainer: {
-    marginBottom: 20,
+    marginBottom: 24,
   },
   label: {
     fontSize: 14,
@@ -49,10 +48,11 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   input: {
-    height: 40,
+    height: 50,
     borderWidth: 1,
     borderRadius: 8,
     paddingHorizontal: 10,
+    backgroundColor: "#ddd"
   },
   inputNormal: {
     borderColor: "#ddd",
