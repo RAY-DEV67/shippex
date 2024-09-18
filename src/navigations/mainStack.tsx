@@ -1,7 +1,5 @@
 import React, { Fragment } from "react";
 import { createStackNavigator } from "@react-navigation/stack";
-import SplashScreen from "../screens/splashScreen";
-import LoginScreen from "../screens/loginScreen";
 import ShipmentListScreen from "../screens/shipmentListScreen";
 import Navbar from "../components/navBar";
 

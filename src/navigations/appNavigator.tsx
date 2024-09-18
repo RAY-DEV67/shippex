@@ -1,6 +1,5 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
-import ShipmentListScreen from "../screens/shipmentListScreen";
 import AuthStack from "./authStack";
 import MainStack from "./mainStack";
 
