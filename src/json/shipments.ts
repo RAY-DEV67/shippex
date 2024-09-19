@@ -10,7 +10,7 @@ export const ShipmentsData = [
   },
   {
     id: "2",
-    awb: "41785691424",
+    awb: "6878691424",
     origin: "Cairo",
     originStreet: "Dokki, 22 Nile St.",
     destinationStreet: "Smoha, 22 max St.",
@@ -19,7 +19,7 @@ export const ShipmentsData = [
   },
   {
     id: "3",
-    awb: "41785691425",
+    awb: "48687971425",
     origin: "Cairo",
     originStreet: "Dokki, 22 Nile St.",
     destinationStreet: "Smoha, 22 max St.",
@@ -28,7 +28,7 @@ export const ShipmentsData = [
   },
   {
     id: "4",
-    awb: "41785691426",
+    awb: "487657691426",
     origin: "Cairo",
     originStreet: "Dokki, 22 Nile St.",
     destinationStreet: "Smoha, 22 max St.",
@@ -37,7 +37,7 @@ export const ShipmentsData = [
   },
   {
     id: "5",
-    awb: "41785691426",
+    awb: "4176586788797",
     origin: "Cairo",
     originStreet: "Dokki, 22 Nile St.",
     destinationStreet: "Smoha, 22 max St.",

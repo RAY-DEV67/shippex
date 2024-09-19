@@ -30,13 +30,15 @@ if (
 }
 
 const ShipmentListScreen: React.FC = () => {
+  // const { shipments, loading, error, refetch } = useShipments(); // Response from API Call does not match UI in figma file
   const shipments = ShipmentsData;
   const [selectedShipments, setSelectedShipments] = useState<string[]>([]);
   const [refreshing, setRefreshing] = useState(false);
   const [expandedShipmentIds, setExpandedShipmentIds] = useState<string[]>([]);
   const [filterModalVisible, setFilterModalVisible] = useState(false);
   const [selectedFilter, setSelectedFilter] = useState<string[]>([]);
-  const [userDetails, setUserDetails] = useState<string[]>([]);
+  const [userDetails, setUserDetails] = useState<string | null>(null); // Fixed type here
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     const fetchUserDetails = async () => {
@@ -87,10 +89,24 @@ const ShipmentListScreen: React.FC = () => {
     }
   };
 
-  // Filter the shipments based on selected filter
+  const toggleFilterSelection = (status: string) => {
+    if (selectedFilter.includes(status)) {
+      setSelectedFilter(
+        selectedFilter.filter((filterStatus) => filterStatus !== status)
+      );
+    } else {
+      setSelectedFilter([...selectedFilter, status]);
+    }
+  };
+
+  // Combine the filter and search logic
   const filteredShipments = shipments.filter((shipment) => {
-    if (selectedFilter.length === 0) return true; // Show all if no filter is selected
-    return selectedFilter.includes(shipment.status); // Show only shipments matching selected filter
+    const matchesSearchQuery = shipment.awb
+      .toLowerCase()
+      .includes(searchQuery.toLowerCase());
+    const matchesFilter =
+      selectedFilter.length === 0 || selectedFilter.includes(shipment.status);
+    return matchesSearchQuery && matchesFilter;
   });
 
   const renderShipment = ({ item }: any) => {
@@ -140,11 +156,11 @@ const ShipmentListScreen: React.FC = () => {
             style={[
               styles.expandButton,
               isExpanded && { backgroundColor: "#2f50c1" },
-            ]} // Blue when expanded
+            ]}
             onPress={() => toggleDetails(item.id)}
           >
             <FontAwesome
-              name={isExpanded ? "compress" : "expand"} // Icon change when expanded
+              name={isExpanded ? "compress" : "expand"}
               size={12}
               color={isExpanded ? "white" : "#2f50c1"}
             />
@@ -202,16 +218,6 @@ const ShipmentListScreen: React.FC = () => {
     );
   };
 
-  const toggleFilterSelection = (status: string) => {
-    if (selectedFilter.includes(status)) {
-      setSelectedFilter(
-        selectedFilter.filter((filterStatus) => filterStatus !== status)
-      );
-    } else {
-      setSelectedFilter([...selectedFilter, status]);
-    }
-  };
-
   return (
     <Fragment>
       <StatusBar backgroundColor="#ffffff" barStyle="dark-content" />
@@ -233,7 +239,12 @@ const ShipmentListScreen: React.FC = () => {
           <TouchableOpacity style={styles.searchIcon}>
             <Ionicons name="search" size={20} color="#a7a3b3" />
           </TouchableOpacity>
-          <TextInput style={styles.searchInput} placeholder="Search" />
+          <TextInput
+            style={styles.searchInput}
+            placeholder="Search AWB Number"
+            value={searchQuery}
+            onChangeText={(text) => setSearchQuery(text)}
+          />
         </View>
 
         <View style={styles.searchFilterContainer}>
@@ -261,28 +272,27 @@ const ShipmentListScreen: React.FC = () => {
           </TouchableOpacity>
         </View>
 
-        {filteredShipments.length === 0 && (
+        {filteredShipments.length > 0 ? (
+          <FlatList
+            data={filteredShipments}
+            renderItem={renderShipment}
+            keyExtractor={(item) => item.id}
+            refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }
+          />
+        ) : (
           <Text style={{ textAlign: "center", marginTop: 16 }}>
-            No Result Found
+            No Shipments Found
           </Text>
         )}
 
-        <FlatList
-          data={filteredShipments} // Use filteredShipments instead of shipments
-          keyExtractor={(item) => item.id}
-          renderItem={renderShipment}
-          style={styles.shipmentsList}
-          refreshControl={
-            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-          }
-        />
-
-        {/* Render the FilterModal */}
+        {/* Filter Modal */}
         <FilterModal
           isVisible={filterModalVisible}
-          onClose={() => setFilterModalVisible(false)}
           selectedFilter={selectedFilter}
           onToggleFilter={toggleFilterSelection}
+          onClose={() => setFilterModalVisible(false)}
         />
       </SafeAreaView>
     </Fragment>
