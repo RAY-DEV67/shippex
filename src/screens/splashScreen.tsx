@@ -3,6 +3,7 @@ import { View, StyleSheet, Animated, StatusBar } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "../navigations/appNavigator";
+import { Easing } from "react-native";
 
 type LoginScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -12,56 +13,98 @@ type LoginScreenNavigationProp = StackNavigationProp<
 const SplashScreen: React.FC = () => {
   const navigation = useNavigation<LoginScreenNavigationProp>();
 
-  // Use Animated.Value for both scale and rotation
-  const imageScale = useRef(new Animated.Value(0.4)).current;
-  const imageRotateX = useRef(new Animated.Value(0)).current;
+  // Use Animated.Value for both scale and position
+  const imageScale = useRef(new Animated.Value(0.3)).current; // Scale for whole view
+  const halfLogo1Scale = useRef(new Animated.Value(1)).current; // Scale for halfLogo1
+  const halfLogo2Scale = useRef(new Animated.Value(1)).current; // Scale for halfLogo2
+  const halfLogo2Translate = useRef(
+    new Animated.ValueXY({ x: 0, y: 0 })
+  ).current; // Position for halfLogo2
 
   useEffect(() => {
-    // Animation sequence: scaling and rotating (around X-axis for vertical flip)
-    Animated.parallel([
-      // Scaling animation (from 1 to 5)
-      Animated.timing(imageScale, {
-        toValue: 7,
-        duration: 2000, // Adjust duration if necessary
-        useNativeDriver: true,
-      }),
-      // Rotation animation (flip vertically when scale > 4)
-      Animated.timing(imageRotateX, {
-        toValue: 1, // Rotation of 180 degrees (flip upside down vertically)
-        duration: 1000, // Rotate during the second half of the zoom
-        delay: 900, // Delay the flip to start halfway through zoom
-        useNativeDriver: true,
-      }),
+    // First animation: zoom entire view
+    Animated.sequence([
+      Animated.parallel([
+        // Scaling animation (whole view zoom from 0.3 to 1)
+        Animated.timing(imageScale, {
+          toValue: 1,
+          duration: 2000, // Duration for first zoom
+          easing: Easing.out(Easing.ease), // Smooth easing
+          useNativeDriver: true,
+        }),
+      ]),
+      // Pause for 800ms
+      Animated.delay(800),
+      // Trigger simultaneous animations for both logos
+      Animated.parallel([
+        // Animate only halfLogo1 (zoom in)
+        Animated.timing(halfLogo1Scale, {
+          toValue: 50, 
+          duration: 1000, 
+          easing: Easing.inOut(Easing.ease),
+          useNativeDriver: true,
+        }),
+        // Animate halfLogo2 (move to top-left corner and shrink)
+        Animated.parallel([
+          Animated.timing(halfLogo2Scale, {
+            toValue: 0.5, 
+            duration: 1000, 
+            easing: Easing.inOut(Easing.ease), 
+            useNativeDriver: true,
+          }),
+          Animated.timing(halfLogo2Translate, {
+            toValue: { x: -150, y: -250 }, // Move to top-left (adjust values based on screen size)
+            duration: 1000, 
+            easing: Easing.out(Easing.quad), // Smooth and natural movement
+            useNativeDriver: true,
+          }),
+        ]),
+      ]),
     ]).start();
 
-    // Navigate to the Onboarding screen after animation
+    // Navigate to the Onboarding screen after all animations
     setTimeout(() => {
       navigation.replace("Onboarding");
-    }, 1900);
+    }, 4000); 
   }, []);
-
-  // Interpolating rotation around the X-axis: 0 means 0 degrees, 1 means 180 degrees (vertical flip)
-  const rotationX = imageRotateX.interpolate({
-    inputRange: [0, 1],
-    outputRange: ["0deg", "180deg"], // Rotate vertically (flip from top to bottom)
-  });
 
   return (
     <Fragment>
       <StatusBar backgroundColor="#ffffff" barStyle="dark-content" />
       <View style={styles.container}>
-        <Animated.Image
-          source={require("../../assets/animate.png")}
+        <Animated.View
           style={[
             {
               transform: [
-                { scale: imageScale }, // Apply scale animation
-                { rotateX: rotationX }, // Apply vertical flip (card-like) animation
+                { scale: imageScale }, 
               ],
             },
           ]}
-          resizeMode="contain"
-        />
+        >
+          <Animated.Image
+            source={require("../../assets/halfLogo1.png")}
+            resizeMode="contain"
+            style={[
+              {
+                transform: [{ scale: halfLogo1Scale }], 
+              },
+            ]}
+          />
+          <Animated.Image
+            source={require("../../assets/halfLogo2.png")}
+            resizeMode="contain"
+            style={[
+              styles.image2,
+              {
+                transform: [
+                  { scale: halfLogo2Scale }, // Apply scale animation to halfLogo2 (shrinking)
+                  { translateX: halfLogo2Translate.x }, // Move horizontally
+                  { translateY: halfLogo2Translate.y }, // Move vertically
+                ],
+              },
+            ]}
+          />
+        </Animated.View>
       </View>
     </Fragment>
   );
@@ -75,5 +118,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#fff",
+  },
+  image2: {
+    marginTop: 4,
   },
 });
