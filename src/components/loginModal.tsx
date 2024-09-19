@@ -23,7 +23,6 @@ type LoginScreenNavigationProp = StackNavigationProp<
 >;
 
 const validationSchema = Yup.object().shape({
-  url: Yup.string().url("Invalid URL").required("URL is required"),
   username: Yup.string()
     .email("Invalid email address")
     .required("Email is required"),
@@ -91,12 +90,6 @@ const LoginModal: React.FC<LoginModalProps> = ({ isVisible, onClose }) => {
                   Please enter your credentials
                 </Text>
                 <InputField
-                  label="URL"
-                  name="url"
-                  placeholder="https://www.example.com"
-                  isUrlField
-                />
-                <InputField
                   label="Username / Email"
                   name="username"
                   placeholder="Your email"
@@ -139,6 +132,9 @@ const styles = StyleSheet.create({
     padding: 16,
     backgroundColor: "#fff",
     alignItems: "center",
+    marginTop: 30,
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
   },
   form: {
     backgroundColor: "#fff",

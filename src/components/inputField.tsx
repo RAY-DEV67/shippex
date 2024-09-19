@@ -7,7 +7,6 @@ interface InputFieldProps {
   name: string;
   placeholder: string;
   secureTextEntry?: boolean;
-  isUrlField?: boolean; // For URL field behavior
 }
 
 const InputField: React.FC<InputFieldProps> = ({
@@ -15,18 +14,12 @@ const InputField: React.FC<InputFieldProps> = ({
   name,
   placeholder,
   secureTextEntry = false,
-  isUrlField = false,
 }) => {
   const [field, meta, helpers] = useField(name);
   const [isFocused, setIsFocused] = useState(false);
 
   const handleFocus = () => {
     setIsFocused(true);
-
-    // For URL input, add 'https://' if not present
-    if (isUrlField && !field.value.startsWith("https://")) {
-      helpers.setValue("https://");
-    }
   };
 
   const handleBlur = () => {

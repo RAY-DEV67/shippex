@@ -22,7 +22,7 @@ const useAuth = () => {
       const data = await response.json();
       if (response.ok) {
         setIsAuthenticated(true);
-        console.log(data)
+        console.log(data);
         return data;
       } else {
         throw new Error(data.message || "Login failed");
