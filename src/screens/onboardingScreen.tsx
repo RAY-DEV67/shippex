@@ -15,7 +15,7 @@ const Onboarding: React.FC = () => {
 
   return (
     <Fragment>
-      <StatusBar backgroundColor="#1E56D1" barStyle="light-content" />
+      <StatusBar backgroundColor="#2f50c1" barStyle="light-content" />
       <View style={styles.container}>
         <View style={styles.logoContainer}>
           <Image
@@ -43,7 +43,7 @@ export default Onboarding;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#1E56D1",
+    backgroundColor: "#2f50c1",
     justifyContent: "space-between",
   },
   logoContainer: {
