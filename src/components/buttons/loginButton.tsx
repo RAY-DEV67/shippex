@@ -6,12 +6,14 @@ import {
   ViewStyle,
   TextStyle,
 } from "react-native";
+import LoadingIndicator from "../loadingIndicator";
 
 interface LoginButtonProps {
   onPress: () => void;
   disabled?: boolean;
   buttonStyle?: ViewStyle;
   textStyle?: TextStyle;
+  loading?: boolean; // Add loading prop
 }
 
 const LoginButton: React.FC<LoginButtonProps> = ({
@@ -19,14 +21,19 @@ const LoginButton: React.FC<LoginButtonProps> = ({
   disabled,
   buttonStyle,
   textStyle,
+  loading, // Use loading prop
 }) => {
   return (
     <TouchableOpacity
       style={[styles.button, disabled && styles.disabledButton, buttonStyle]}
       onPress={onPress}
-      disabled={disabled}
+      disabled={disabled || loading} // Disable button when loading
     >
-      <Text style={[styles.buttonText, textStyle]}>Login</Text>
+      {loading ? ( // Show spinner when loading
+        <LoadingIndicator />
+      ) : (
+        <Text style={[styles.buttonText, textStyle]}>Login</Text>
+      )}
     </TouchableOpacity>
   );
 };
@@ -42,7 +49,7 @@ const styles = StyleSheet.create({
     marginTop: 30,
   },
   disabledButton: {
-    backgroundColor: "#d3d3d3", 
+    backgroundColor: "#d3d3d3",
   },
   buttonText: {
     color: "#fff",

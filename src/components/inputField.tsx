@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
     color: "#585363",
     position: "absolute",
     top: 2,
-    left: 10,
+    left: 5,
     paddingHorizontal: 5,
     zIndex: 1,
   },

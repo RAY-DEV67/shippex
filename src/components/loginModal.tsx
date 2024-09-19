@@ -15,6 +15,7 @@ import LoginButton from "../components/buttons/loginButton";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { useNavigation } from "@react-navigation/native";
 import { RootStackParamList } from "../navigations/appNavigator";
+import useAuth from "../hooks/useAuth"; // Import useAuth
 
 type LoginScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -38,20 +39,34 @@ interface LoginModalProps {
 
 const LoginModal: React.FC<LoginModalProps> = ({ isVisible, onClose }) => {
   const navigation = useNavigation<LoginScreenNavigationProp>();
+  const { login, loading } = useAuth(); // Get loading state from useAuth
 
-  const handleLogin = (values: {
+  const handleLogin = async (values: {
     url: string;
     username: string;
     password: string;
   }) => {
-    // Simulate login and navigate to Home screen after success
-    Alert.alert("Login Successful", `Welcome, ${values.username}!`);
+    try {
+      await login(values.username, values.password);
 
-    // Reset the navigation stack to prevent going back to login
-    navigation.reset({
-      index: 0,
-      routes: [{ name: "Main" }],
-    });
+      // On successful login, navigate to Main screen
+      Alert.alert("Login Successful", `Welcome, ${values.username}!`);
+      navigation.reset({
+        index: 0,
+        routes: [{ name: "Main" }],
+      });
+    } catch (error) {
+      // Check if the error is an instance of Error
+      if (error instanceof Error) {
+        Alert.alert("Login Failed", error.message);
+      } else {
+        // Handle unknown error types
+        Alert.alert(
+          "Login Failed",
+          "An unknown error occurred. Please try again."
+        );
+      }
+    }
   };
 
   return (
@@ -73,14 +88,13 @@ const LoginModal: React.FC<LoginModalProps> = ({ isVisible, onClose }) => {
               <View>
                 <Text style={styles.title}>Login</Text>
                 <Text style={styles.subtitle}>
-                  Please enter your First, Last name and your phone number in
-                  order to register
+                  Please enter your credentials
                 </Text>
                 <InputField
                   label="URL"
                   name="url"
                   placeholder="https://www.example.com"
-                  isUrlField // Pass the prop for URL-specific behavior
+                  isUrlField
                 />
                 <InputField
                   label="Username / Email"
@@ -94,17 +108,17 @@ const LoginModal: React.FC<LoginModalProps> = ({ isVisible, onClose }) => {
                   secureTextEntry
                 />
               </View>
-              {/* Use the reusable LoginButton and handle disabled state */}
               <LoginButton
                 onPress={handleSubmit}
-                disabled={!(isValid && dirty)} // Disable the button if the form is not valid or dirty
+                disabled={!(isValid && dirty)} // Disable if form is invalid or dirty
+                loading={loading} // Pass the loading state
                 buttonStyle={
-                  !(isValid && dirty)
+                  !(isValid && dirty) || loading
                     ? styles.disabledButton
-                    : styles.loginButton // Apply different styles based on validity
+                    : styles.loginButton
                 }
                 textStyle={
-                  !(isValid && dirty)
+                  !(isValid && dirty) || loading
                     ? styles.disabledButtonText
                     : styles.loginButtonText
                 }
@@ -117,15 +131,14 @@ const LoginModal: React.FC<LoginModalProps> = ({ isVisible, onClose }) => {
   );
 };
 
+export default LoginModal;
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
     backgroundColor: "#fff",
     alignItems: "center",
-    marginTop: 50,
-    borderTopRightRadius: 20,
-    borderTopLeftRadius: 20,
   },
   form: {
     backgroundColor: "#fff",
@@ -135,14 +148,6 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     justifyContent: "space-between",
     flex: 1,
-  },
-  cancelButton: {
-    alignSelf: "flex-start",
-    marginBottom: 20,
-  },
-  cancelText: {
-    color: "#007aff",
-    fontSize: 16,
   },
   title: {
     fontSize: 40,
@@ -155,7 +160,7 @@ const styles = StyleSheet.create({
     marginBottom: 30,
   },
   loginButton: {
-    backgroundColor: "#2f50c1",
+    backgroundColor: "#007aff",
     paddingVertical: 15,
     borderRadius: 8,
     alignItems: "center",
@@ -163,7 +168,7 @@ const styles = StyleSheet.create({
     marginBottom: 40,
   },
   disabledButton: {
-    backgroundColor: "#eae7f2",
+    backgroundColor: "#d3d3d3",
     marginBottom: 40,
   },
   loginButtonText: {
@@ -172,8 +177,6 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   disabledButtonText: {
-    color: "#a7a3b3",
+    color: "#a1a1a1",
   },
 });
-
-export default LoginModal;
