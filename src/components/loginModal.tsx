@@ -16,6 +16,7 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import { useNavigation } from "@react-navigation/native";
 import { RootStackParamList } from "../navigations/appNavigator";
 import useAuth from "../hooks/useAuth"; // Import useAuth
+import ToastFunction from "../helper/toast";
 
 type LoginScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -48,8 +49,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ isVisible, onClose }) => {
     try {
       await login(values.username, values.password);
 
-      // On successful login, navigate to Main screen
-      Alert.alert("Login Successful", `Welcome, ${values.username}!`);
+      ToastFunction("success", `Login Successful`, `Welcome Back`);
       navigation.reset({
         index: 0,
         routes: [{ name: "Main" }],
