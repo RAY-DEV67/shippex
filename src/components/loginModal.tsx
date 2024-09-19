@@ -75,7 +75,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ isVisible, onClose }) => {
       visible={isVisible}
       onRequestClose={onClose}
     >
-      <StatusBar backgroundColor="#ffffff" barStyle="dark-content" />
+      <StatusBar backgroundColor="#2f50c1" barStyle="dark-content" />
       <Formik
         initialValues={{ url: "", username: "", password: "" }}
         validationSchema={validationSchema}
