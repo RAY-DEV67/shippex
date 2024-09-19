@@ -26,6 +26,7 @@ type LoginScreenNavigationProp = StackNavigationProp<
 
 const validationSchema = Yup.object().shape({
   username: Yup.string()
+    .trim()
     .email("Invalid email address")
     .required("Email is required"),
   password: Yup.string()
