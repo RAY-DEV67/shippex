@@ -39,22 +39,22 @@ const SplashScreen: React.FC = () => {
       Animated.parallel([
         // Animate only halfLogo1 (zoom in)
         Animated.timing(halfLogo1Scale, {
-          toValue: 50, 
-          duration: 1000, 
+          toValue: 50,
+          duration: 1000,
           easing: Easing.inOut(Easing.ease),
           useNativeDriver: true,
         }),
         // Animate halfLogo2 (move to top-left corner and shrink)
         Animated.parallel([
           Animated.timing(halfLogo2Scale, {
-            toValue: 0.5, 
-            duration: 1000, 
-            easing: Easing.inOut(Easing.ease), 
+            toValue: 0.5,
+            duration: 1000,
+            easing: Easing.inOut(Easing.ease),
             useNativeDriver: true,
           }),
           Animated.timing(halfLogo2Translate, {
             toValue: { x: -150, y: -250 }, // Move to top-left (adjust values based on screen size)
-            duration: 1000, 
+            duration: 1000,
             easing: Easing.out(Easing.quad), // Smooth and natural movement
             useNativeDriver: true,
           }),
@@ -64,8 +64,8 @@ const SplashScreen: React.FC = () => {
 
     // Navigate to the Onboarding screen after all animations
     setTimeout(() => {
-      navigation.replace("Onboarding");
-    }, 4000); 
+      navigation.replace("Login");
+    }, 4000);
   }, []);
 
   return (
@@ -75,9 +75,7 @@ const SplashScreen: React.FC = () => {
         <Animated.View
           style={[
             {
-              transform: [
-                { scale: imageScale }, 
-              ],
+              transform: [{ scale: imageScale }],
             },
           ]}
         >
@@ -86,7 +84,7 @@ const SplashScreen: React.FC = () => {
             resizeMode="contain"
             style={[
               {
-                transform: [{ scale: halfLogo1Scale }], 
+                transform: [{ scale: halfLogo1Scale }],
               },
             ]}
           />
