@@ -2,13 +2,14 @@ import React, { Fragment, useState } from "react";
 import { View, Image, StyleSheet, StatusBar } from "react-native";
 import LoginButton from "../components/buttons/loginButton";
 import LoginModal from "../components/loginModal";
+import colors from "../const/colors";
 
 const LoginScreen: React.FC = () => {
   const [filterModalVisible, setFilterModalVisible] = useState(false);
 
   return (
     <Fragment>
-      <StatusBar backgroundColor="#2f50c1" barStyle="light-content" />
+      <StatusBar backgroundColor={colors.blue} barStyle="light-content" />
       <View style={styles.container}>
         <View style={styles.logoContainer}>
           <Image
@@ -22,8 +23,8 @@ const LoginScreen: React.FC = () => {
             onPress={() => {
               setFilterModalVisible(true);
             }}
-            buttonStyle={styles.whiteButton}
-            textStyle={styles.blackButtonText}
+            backgroundColor={colors.white}
+            color={colors.blue}
           />
         </View>
       </View>
@@ -42,7 +43,7 @@ export default LoginScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#2f50c1",
+    backgroundColor: colors.blue,
     justifyContent: "space-between",
   },
   logoContainer: {
@@ -53,11 +54,5 @@ const styles = StyleSheet.create({
   buttonContainer: {
     paddingHorizontal: 20,
     paddingBottom: 40,
-  },
-  whiteButton: {
-    backgroundColor: "#fff",
-  },
-  blackButtonText: {
-    color: "#000",
   },
 });

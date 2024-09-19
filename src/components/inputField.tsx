@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { TextInput, View, Text, StyleSheet } from "react-native";
 import { useField } from "formik";
+import colors from "../const/colors";
 
 interface InputFieldProps {
   label: string;
@@ -64,7 +65,7 @@ const styles = StyleSheet.create({
   },
   label: {
     fontSize: 10,
-    color: "#585363",
+    color: colors.darkGray,
     position: "absolute",
     top: 2,
     left: 5,
@@ -73,11 +74,11 @@ const styles = StyleSheet.create({
   },
   input: {
     borderWidth: 1,
-    borderColor: "#f4f2f8",
+    borderColor: colors.lightGray,
     borderRadius: 8,
     paddingHorizontal: 10,
-    backgroundColor: "#f4f2f8",
-    color: "#2f50c1",
+    backgroundColor: colors.lightGray,
+    color: colors.blue,
   },
   inputHeight: {
     height: 50,
@@ -86,16 +87,16 @@ const styles = StyleSheet.create({
     height: 65,
   },
   inputNormal: {
-    borderColor: "#ddd",
+    borderColor: colors.lightGray,
   },
   inputError: {
-    borderColor: "#ff0000",
+    borderColor: colors.red,
   },
   inputFocused: {
-    borderColor: "#2f50c1", // Blue border when focused
+    borderColor: colors.blue,
   },
   errorText: {
-    color: "#ff0000",
+    color: colors.red,
     fontSize: 12,
     marginTop: 5,
   },

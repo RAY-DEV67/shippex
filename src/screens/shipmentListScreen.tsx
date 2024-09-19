@@ -19,6 +19,7 @@ import FilterModal from "../components/filterModal";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { ShipmentsData } from "../json/shipments";
 import ShipmentCard from "../components/shipmentCard";
+import colors from "../const/colors"; 
 
 // Enable layout animation on Android
 if (
@@ -29,14 +30,13 @@ if (
 }
 
 const ShipmentListScreen: React.FC = () => {
-  // const { shipments, loading, error, refetch } = useShipments(); // Response from API Call does not match UI in figma file
   const shipments = ShipmentsData;
   const [selectedShipments, setSelectedShipments] = useState<string[]>([]);
   const [refreshing, setRefreshing] = useState(false);
   const [expandedShipmentIds, setExpandedShipmentIds] = useState<string[]>([]);
   const [filterModalVisible, setFilterModalVisible] = useState(false);
   const [selectedFilter, setSelectedFilter] = useState<string[]>([]);
-  const [userDetails, setUserDetails] = useState<string | null>(null); // Fixed type here
+  const [userDetails, setUserDetails] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
@@ -70,7 +70,6 @@ const ShipmentListScreen: React.FC = () => {
 
   const onRefresh = () => {
     setRefreshing(true);
-    // Simulate a network request (e.g., re-fetch the shipment data)
     setTimeout(() => {
       setRefreshing(false);
     }, 2000);
@@ -81,9 +80,9 @@ const ShipmentListScreen: React.FC = () => {
     if (expandedShipmentIds.includes(id)) {
       setExpandedShipmentIds(
         expandedShipmentIds.filter((shipmentId) => shipmentId !== id)
-      ); // Collapse if already expanded
+      ); // Collapse
     } else {
-      setExpandedShipmentIds([...expandedShipmentIds, id]); // Expand if not already expanded
+      setExpandedShipmentIds([...expandedShipmentIds, id]); // Expand
     }
   };
 
@@ -97,7 +96,6 @@ const ShipmentListScreen: React.FC = () => {
     }
   };
 
-  // Combine the filter and search logic
   const filteredShipments = shipments.filter((shipment) => {
     const matchesSearchQuery = shipment.awb
       .toLowerCase()
@@ -123,13 +121,17 @@ const ShipmentListScreen: React.FC = () => {
 
   return (
     <Fragment>
-      <StatusBar backgroundColor="#ffffff" barStyle="dark-content" />
+      <StatusBar backgroundColor={colors.white} barStyle="dark-content" />
       <SafeAreaView style={styles.container}>
         <View style={styles.header}>
           <Image source={require("../../assets/avatar.png")} />
           <Image source={require("../../assets/logoBlue.png")} />
           <TouchableOpacity style={styles.icon}>
-            <Ionicons name="notifications-outline" size={24} color="#2f50c1" />
+            <Ionicons
+              name="notifications-outline"
+              size={24}
+              color={colors.blue}
+            />
           </TouchableOpacity>
         </View>
 
@@ -140,7 +142,7 @@ const ShipmentListScreen: React.FC = () => {
 
         <View>
           <TouchableOpacity style={styles.searchIcon}>
-            <Ionicons name="search" size={20} color="#a7a3b3" />
+            <Ionicons name="search" size={20} color={colors.gray} />
           </TouchableOpacity>
           <TextInput
             style={styles.searchInput}
@@ -155,11 +157,11 @@ const ShipmentListScreen: React.FC = () => {
             style={styles.filterButton}
             onPress={() => setFilterModalVisible(true)}
           >
-            <Ionicons name="filter-outline" size={20} color="#a7a3b3" />
+            <Ionicons name="filter-outline" size={20} color={colors.gray} />
             <Text style={styles.filterText}>Filters</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.scanButton}>
-            <Ionicons name="scan-outline" size={20} color="white" />
+            <Ionicons name="scan-outline" size={20} color={colors.white} />
             <Text style={styles.scanText}>Add Scan</Text>
           </TouchableOpacity>
         </View>
@@ -190,7 +192,6 @@ const ShipmentListScreen: React.FC = () => {
           </Text>
         )}
 
-        {/* Filter Modal */}
         <FilterModal
           isVisible={filterModalVisible}
           selectedFilter={selectedFilter}
@@ -205,7 +206,7 @@ const ShipmentListScreen: React.FC = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#ffffff",
+    backgroundColor: colors.white,
   },
   header: {
     flexDirection: "row",
@@ -213,33 +214,21 @@ const styles = StyleSheet.create({
     padding: 16,
     justifyContent: "space-between",
   },
-  profilePic: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-  },
   userInfo: {
     marginLeft: 12,
   },
   greeting: {
     fontSize: 16,
-    color: "#888",
+    color: colors.darkGray,
   },
   username: {
     fontSize: 24,
     fontWeight: "bold",
   },
-  searchFilterContainer: {
-    flexDirection: "row",
-    paddingHorizontal: 16,
-    paddingVertical: 8,
-    marginTop: 16,
-  },
   searchInput: {
-    backgroundColor: "#F4F2F8",
+    backgroundColor: colors.lightGray,
     borderRadius: 8,
     paddingLeft: 50,
-    marginRight: 8,
     height: 50,
     marginTop: 16,
     marginHorizontal: 16,
@@ -251,12 +240,18 @@ const styles = StyleSheet.create({
     left: "7%",
     zIndex: 1,
   },
+  searchFilterContainer: {
+    flexDirection: "row",
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    marginTop: 16,
+  },
   filterButton: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
     marginRight: 8,
-    backgroundColor: "#F4F2F8",
+    backgroundColor: colors.lightGray,
     paddingVertical: 14,
     borderRadius: 8,
     width: "48%",
@@ -264,20 +259,20 @@ const styles = StyleSheet.create({
   filterText: {
     marginLeft: 8,
     fontSize: 14,
-    color: "#a7a3b3",
+    color: colors.gray,
     fontWeight: "600",
   },
   scanButton: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "#2f50c1",
+    backgroundColor: colors.blue,
     paddingVertical: 14,
     borderRadius: 8,
     width: "48%",
   },
   scanText: {
-    marginLeft: 4,
+    marginLeft: 8,
     fontSize: 14,
     color: "white",
   },
@@ -298,7 +293,7 @@ const styles = StyleSheet.create({
     color: "blue",
   },
   icon: {
-    backgroundColor: "#f4f2f8",
+    backgroundColor: colors.lightGray,
     padding: 10,
     borderRadius: 20,
   },

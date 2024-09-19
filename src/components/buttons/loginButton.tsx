@@ -1,38 +1,37 @@
 import React from "react";
-import {
-  TouchableOpacity,
-  Text,
-  StyleSheet,
-  ViewStyle,
-  TextStyle,
-} from "react-native";
+import { TouchableOpacity, Text, StyleSheet } from "react-native";
 import LoadingIndicator from "../loadingIndicator";
+import colors from "../../const/colors";
 
 interface LoginButtonProps {
   onPress: () => void;
   disabled?: boolean;
-  buttonStyle?: ViewStyle;
-  textStyle?: TextStyle;
-  loading?: boolean; // Add loading prop
+  backgroundColor?: string;
+  color?: string;
+  loading?: boolean;
 }
 
 const LoginButton: React.FC<LoginButtonProps> = ({
   onPress,
   disabled,
-  buttonStyle,
-  textStyle,
+  backgroundColor,
+  color,
   loading, // Use loading prop
 }) => {
   return (
     <TouchableOpacity
-      style={[styles.button, disabled && styles.disabledButton, buttonStyle]}
+      style={[
+        styles.button,
+        disabled && styles.disabledButton,
+        { backgroundColor: backgroundColor },
+      ]}
       onPress={onPress}
       disabled={disabled || loading} // Disable button when loading
     >
       {loading ? ( // Show spinner when loading
         <LoadingIndicator />
       ) : (
-        <Text style={[styles.buttonText, textStyle]}>Login</Text>
+        <Text style={[styles.buttonText, { color: color }]}>Login</Text>
       )}
     </TouchableOpacity>
   );
@@ -42,17 +41,15 @@ export default LoginButton;
 
 const styles = StyleSheet.create({
   button: {
-    backgroundColor: "#007aff",
     paddingVertical: 15,
     borderRadius: 8,
     alignItems: "center",
-    marginTop: 30,
+    marginBottom: 10,
   },
   disabledButton: {
-    backgroundColor: "#d3d3d3",
+    backgroundColor: colors.midGray,
   },
   buttonText: {
-    color: "#fff",
     fontSize: 16,
     fontWeight: "bold",
   },

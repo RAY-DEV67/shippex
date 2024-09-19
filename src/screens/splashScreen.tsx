@@ -4,6 +4,7 @@ import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "../navigations/appNavigator";
 import { Easing } from "react-native";
+import colors from "../const/colors";
 
 type LoginScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -70,7 +71,7 @@ const SplashScreen: React.FC = () => {
 
   return (
     <Fragment>
-      <StatusBar backgroundColor="#ffffff" barStyle="dark-content" />
+      <StatusBar backgroundColor={colors.white} barStyle="dark-content" />
       <View style={styles.container}>
         <Animated.View
           style={[
@@ -115,7 +116,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#fff",
+    backgroundColor: colors.white,
   },
   image2: {
     marginTop: 4,

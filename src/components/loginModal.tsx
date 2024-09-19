@@ -15,8 +15,9 @@ import LoginButton from "../components/buttons/loginButton";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { useNavigation } from "@react-navigation/native";
 import { RootStackParamList } from "../navigations/appNavigator";
-import useAuth from "../hooks/useAuth"; // Import useAuth
+import useAuth from "../hooks/useAuth";
 import ToastFunction from "../helper/toast";
+import colors from "../const/colors";
 
 type LoginScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -75,7 +76,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ isVisible, onClose }) => {
       visible={isVisible}
       onRequestClose={onClose}
     >
-      <StatusBar backgroundColor="#2f50c1" barStyle="dark-content" />
+      <StatusBar backgroundColor={colors.blue} barStyle="dark-content" />
       <Formik
         initialValues={{ url: "", username: "", password: "" }}
         validationSchema={validationSchema}
@@ -105,15 +106,13 @@ const LoginModal: React.FC<LoginModalProps> = ({ isVisible, onClose }) => {
                 onPress={handleSubmit}
                 disabled={!(isValid && dirty)} // Disable if form is invalid or dirty
                 loading={loading} // Pass the loading state
-                buttonStyle={
-                  !(isValid && dirty) || loading
-                    ? styles.disabledButton
-                    : styles.loginButton
+                backgroundColor={
+                  !(isValid && dirty) || loading ? colors.midGray : colors.blue
                 }
-                textStyle={
+                color={
                   !(isValid && dirty) || loading
-                    ? styles.disabledButtonText
-                    : styles.loginButtonText
+                    ? colors.darkGray
+                    : colors.white
                 }
               />
             </View>
@@ -130,14 +129,14 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
-    backgroundColor: "#fff",
+    backgroundColor: colors.white,
     alignItems: "center",
     marginTop: 30,
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
   },
   form: {
-    backgroundColor: "#fff",
+    backgroundColor: colors.white,
     width: "100%",
     marginTop: 32,
     display: "flex",
@@ -152,27 +151,7 @@ const styles = StyleSheet.create({
   },
   subtitle: {
     fontSize: 14,
-    color: "#6b6b6b",
+    color: colors.darkGray,
     marginBottom: 30,
-  },
-  loginButton: {
-    backgroundColor: "#007aff",
-    paddingVertical: 15,
-    borderRadius: 8,
-    alignItems: "center",
-    marginTop: 30,
-    marginBottom: 40,
-  },
-  disabledButton: {
-    backgroundColor: "#d3d3d3",
-    marginBottom: 40,
-  },
-  loginButtonText: {
-    color: "#fff",
-    fontSize: 16,
-    fontWeight: "bold",
-  },
-  disabledButtonText: {
-    color: "#a1a1a1",
   },
 });

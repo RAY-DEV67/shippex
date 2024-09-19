@@ -7,6 +7,7 @@ import {
   StyleSheet,
   ScrollView,
 } from "react-native";
+import colors from "../const/colors";
 
 interface FilterModalProps {
   isVisible: boolean;
@@ -87,8 +88,7 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(0, 0, 0, 0.5)",
   },
   modalContent: {
-    backgroundColor: "#fff",
-    // padding: 20,
+    backgroundColor: colors.white,
     borderTopLeftRadius: 15,
     borderTopRightRadius: 15,
     maxHeight: "50%",
@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     borderBottomWidth: 1,
     padding: 16,
-    borderColor: "#F4F2F8",
+    borderColor: colors.lightGray,
   },
   filterContainer: {
     paddingHorizontal: 16,
@@ -108,11 +108,11 @@ const styles = StyleSheet.create({
   },
   cancelText: {
     fontSize: 14,
-    color: "#007AFF",
+    color: colors.blue,
   },
   doneText: {
     fontSize: 14,
-    color: "#007AFF",
+    color: colors.blue,
   },
   filterTitle: {
     fontSize: 18,
@@ -121,7 +121,7 @@ const styles = StyleSheet.create({
   filterLabel: {
     fontSize: 12,
     marginVertical: 10,
-    color: "#8e8e93",
+    color: colors.darkGray,
   },
   filterOptions: {
     flexDirection: "row",
@@ -130,20 +130,20 @@ const styles = StyleSheet.create({
   },
   filterButton: {
     padding: 10,
-    backgroundColor: "#f2f2f7",
+    backgroundColor: colors.lightGray,
     borderRadius: 8,
     marginBottom: 10,
     width: "30%",
   },
   selectedFilter: {
-    backgroundColor: "#007AFF",
+    backgroundColor: colors.blue,
   },
   filterText: {
     textAlign: "center",
-    color: "#8e8e93",
+    color: colors.darkGray,
   },
   selectedText: {
-    color: "#fff",
+    color: colors.white,
   },
 });
 

@@ -1,8 +1,8 @@
-// ShipmentCard.tsx
 import React from "react";
 import { View, Text, Image, TouchableOpacity, StyleSheet } from "react-native";
 import { Checkbox } from "expo-checkbox";
 import { FontAwesome, Ionicons } from "@expo/vector-icons";
+import colors from "../const/colors";
 
 type ShipmentCardProps = {
   item: any;
@@ -16,7 +16,6 @@ type ShipmentCardProps = {
 const ShipmentCard: React.FC<ShipmentCardProps> = ({
   item,
   isExpanded,
-  expandedShipmentIds,
   toggleShipmentSelection,
   toggleDetails,
   selectedShipments,
@@ -71,7 +70,7 @@ const ShipmentCard: React.FC<ShipmentCardProps> = ({
           <FontAwesome
             name={isExpanded ? "compress" : "expand"}
             size={12}
-            color={isExpanded ? "white" : "#2f50c1"}
+            color={isExpanded ? colors.white : colors.blue}
           />
         </TouchableOpacity>
       </View>
@@ -87,7 +86,11 @@ const ShipmentCard: React.FC<ShipmentCardProps> = ({
               </Text>
             </View>
             <View>
-              <Ionicons name="arrow-forward-sharp" size={24} color="#2f50c1" />
+              <Ionicons
+                name="arrow-forward-sharp"
+                size={24}
+                color={colors.blue}
+              />
             </View>
             <View>
               <Text style={styles.moreShipmentDetailsHeadingText}>
@@ -104,12 +107,12 @@ const ShipmentCard: React.FC<ShipmentCardProps> = ({
 
           <View style={styles.contactDetailsContainer}>
             <TouchableOpacity style={styles.callButton}>
-              <Ionicons name="call" size={20} color="white" />
+              <Ionicons name="call" size={20} color={colors.white} />
               <Text style={styles.contactDetailsText}>Call</Text>
             </TouchableOpacity>
 
             <TouchableOpacity style={styles.whatsappButton}>
-              <Ionicons name="logo-whatsapp" size={20} color="white" />
+              <Ionicons name="logo-whatsapp" size={20} color={colors.white} />
               <Text style={styles.contactDetailsText}>Whatsapp</Text>
             </TouchableOpacity>
           </View>
@@ -123,7 +126,7 @@ const styles = StyleSheet.create({
   shipmentCard: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "#F4F2F8",
+    backgroundColor: colors.lightGray,
     padding: 16,
     borderRadius: 8,
   },
@@ -150,24 +153,24 @@ const styles = StyleSheet.create({
   },
   route: {
     fontSize: 12,
-    color: "#757281",
+    color: colors.darkGray,
   },
   receivedStatus: {
-    color: "#2f50c1",
+    color: colors.blue,
     fontWeight: "bold",
     marginRight: 8,
-    backgroundColor: "#d9e6fd",
+    backgroundColor: colors.lightBlue,
     fontSize: 12,
     paddingVertical: 6,
     paddingHorizontal: 10,
     borderRadius: 8,
     borderWidth: 1,
-    borderColor: "#fff",
+    borderColor: colors.white,
     textAlign: "center",
   },
   canceledStatus: {
-    backgroundColor: "#f4f2f8",
-    color: "#58536e",
+    backgroundColor: colors.lightGray,
+    color: colors.darkGray,
     fontWeight: "bold",
     marginRight: 8,
     fontSize: 12,
@@ -175,12 +178,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     borderRadius: 8,
     borderWidth: 1,
-    borderColor: "#fff",
+    borderColor: colors.white,
     textAlign: "center",
   },
   errorStatus: {
-    backgroundColor: "#fee3d4",
-    color: "#D12030",
+    backgroundColor: colors.lightRed,
+    color: colors.red,
     fontWeight: "bold",
     marginRight: 8,
     fontSize: 12,
@@ -188,12 +191,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     borderRadius: 8,
     borderWidth: 1,
-    borderColor: "#fff",
+    borderColor: colors.white,
     textAlign: "center",
   },
   deliveredStatus: {
-    backgroundColor: "#e3fad6",
-    color: "#208d28",
+    backgroundColor: colors.lightGreen,
+    color: colors.green,
     fontWeight: "bold",
     marginRight: 8,
     fontSize: 12,
@@ -201,12 +204,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     borderRadius: 8,
     borderWidth: 1,
-    borderColor: "#fff",
+    borderColor: colors.white,
     textAlign: "center",
   },
   onHoldStatus: {
-    backgroundColor: "#fff3d5",
-    color: "#db7e21",
+    backgroundColor: colors.lightOrange,
+    color: colors.orange,
     fontWeight: "bold",
     marginRight: 8,
     fontSize: 12,
@@ -214,23 +217,23 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     borderRadius: 8,
     borderWidth: 1,
-    borderColor: "#fff",
+    borderColor: colors.white,
     textAlign: "center",
   },
   expandButton: {
     marginLeft: 8,
-    backgroundColor: "#fff",
+    backgroundColor: colors.white,
     padding: 10,
     borderRadius: 20,
   },
 
   detailsContainer: {
-    backgroundColor: "#f4f2f8",
+    backgroundColor: colors.lightGray,
     padding: 10,
-    borderRadius: 10, // This keeps the rounded corners
-    borderWidth: 2, // Apply the border only on the top
-    borderColor: "#ffffff", // Set the top border color
-    borderStyle: "dashed", // Dashed style for the top border
+    borderRadius: 10,
+    borderWidth: 2,
+    borderColor: colors.white,
+    borderStyle: "dashed",
   },
   moreShipmentDetails: {
     display: "flex",
@@ -239,15 +242,15 @@ const styles = StyleSheet.create({
   },
   moreShipmentDetailsHeadingText: {
     fontSize: 11,
-    color: "#2f50c1",
+    color: colors.blue,
   },
   moreShipmentDetailsText: {
     fontSize: 16,
-    color: "2f50c1",
+    color: colors.blue,
   },
   moreShipmentDetailsStreetText: {
     fontSize: 13,
-    color: "2f50c1",
+    color: colors.blue,
   },
   contactDetailsContainer: {
     display: "flex",
@@ -260,7 +263,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "#6c91ec",
+    backgroundColor: colors.blue,
     paddingVertical: 8,
     borderRadius: 8,
     paddingHorizontal: 16,
@@ -269,7 +272,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "#25d366",
+    backgroundColor: colors.midGreen,
     paddingVertical: 8,
     borderRadius: 8,
     paddingHorizontal: 16,
@@ -277,7 +280,7 @@ const styles = StyleSheet.create({
   contactDetailsText: {
     marginLeft: 10,
     fontSize: 16,
-    color: "white",
+    color: colors.white,
   },
 });
 
