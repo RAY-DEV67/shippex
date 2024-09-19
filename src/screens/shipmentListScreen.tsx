@@ -18,8 +18,8 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 import Checkbox from "expo-checkbox";
 import FilterModal from "../components/filterModal";
-import { useShipments } from "../hooks/useShipments";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { ShipmentsData } from "../json/shipments";
 
 // Enable layout animation on Android
 if (
@@ -29,58 +29,8 @@ if (
   UIManager.setLayoutAnimationEnabledExperimental(true);
 }
 
-const shipmentsData = [
-  {
-    id: "1",
-    awb: "41785691423",
-    origin: "Cairo",
-    originStreet: "Dokki, 22 Nile St.",
-    destinationStreet: "Smoha, 22 max St.",
-    destination: "Alexandria",
-    status: "RECEIVED",
-  },
-  {
-    id: "2",
-    awb: "41785691424",
-    origin: "Cairo",
-    originStreet: "Dokki, 22 Nile St.",
-    destinationStreet: "Smoha, 22 max St.",
-    destination: "Alexandria",
-    status: "CANCELLED",
-  },
-  {
-    id: "3",
-    awb: "41785691425",
-    origin: "Cairo",
-    originStreet: "Dokki, 22 Nile St.",
-    destinationStreet: "Smoha, 22 max St.",
-    destination: "Alexandria",
-    status: "ERROR",
-  },
-  {
-    id: "4",
-    awb: "41785691426",
-    origin: "Cairo",
-    originStreet: "Dokki, 22 Nile St.",
-    destinationStreet: "Smoha, 22 max St.",
-    destination: "Alexandria",
-    status: "DELIVERED",
-  },
-  {
-    id: "5",
-    awb: "41785691426",
-    origin: "Cairo",
-    originStreet: "Dokki, 22 Nile St.",
-    destinationStreet: "Smoha, 22 max St.",
-    destination: "Alexandria",
-    status: "ON HOLD",
-  },
-];
-
 const ShipmentListScreen: React.FC = () => {
-  // const { shipments, loading, error, refetch } = useShipments(); // Response from API Calldoes not match UI in figma file
-
-  const shipments = shipmentsData;
+  const shipments = ShipmentsData;
   const [selectedShipments, setSelectedShipments] = useState<string[]>([]);
   const [refreshing, setRefreshing] = useState(false);
   const [expandedShipmentIds, setExpandedShipmentIds] = useState<string[]>([]);
@@ -122,12 +72,10 @@ const ShipmentListScreen: React.FC = () => {
     setRefreshing(true);
     // Simulate a network request (e.g., re-fetch the shipment data)
     setTimeout(() => {
-      // You can update the shipments array here if needed
       setRefreshing(false);
     }, 2000);
   };
 
-  // Function to toggle the shipment details visibility
   const toggleDetails = (id: string) => {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
     if (expandedShipmentIds.includes(id)) {
@@ -139,11 +87,17 @@ const ShipmentListScreen: React.FC = () => {
     }
   };
 
+  // Filter the shipments based on selected filter
+  const filteredShipments = shipments.filter((shipment) => {
+    if (selectedFilter.length === 0) return true; // Show all if no filter is selected
+    return selectedFilter.includes(shipment.status); // Show only shipments matching selected filter
+  });
+
   const renderShipment = ({ item }: any) => {
     const isExpanded = expandedShipmentIds.includes(item.id); // Check if the current shipment is expanded
 
     return (
-      <View>
+      <View style={styles.shipmentCardContainer}>
         <View style={styles.shipmentCard}>
           <Checkbox
             value={selectedShipments.includes(item.id)}
@@ -307,8 +261,14 @@ const ShipmentListScreen: React.FC = () => {
           </TouchableOpacity>
         </View>
 
+        {filteredShipments.length === 0 && (
+          <Text style={{ textAlign: "center", marginTop: 16 }}>
+            No Result Found
+          </Text>
+        )}
+
         <FlatList
-          data={shipments}
+          data={filteredShipments} // Use filteredShipments instead of shipments
           keyExtractor={(item) => item.id}
           renderItem={renderShipment}
           style={styles.shipmentsList}
@@ -433,7 +393,9 @@ const styles = StyleSheet.create({
     backgroundColor: "#F4F2F8",
     padding: 16,
     borderRadius: 8,
-    marginTop: 8,
+  },
+  shipmentCardContainer: {
+    marginVertical: 4,
   },
   checkbox: {
     marginRight: 16,

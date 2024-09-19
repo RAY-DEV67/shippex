@@ -7,7 +7,6 @@ import {
   StyleSheet,
   ScrollView,
 } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
 
 interface FilterModalProps {
   isVisible: boolean;
@@ -23,13 +22,13 @@ const FilterModal: React.FC<FilterModalProps> = ({
   onToggleFilter,
 }) => {
   const filters = [
-    "Received",
-    "Putaway",
-    "Delivered",
-    "Canceled",
-    "Rejected",
-    "Lost",
-    "On Hold",
+    "RECEIVED",
+    "PUTAWAY",
+    "DELIVERED",
+    "CANCELLED",
+    "REJECTED",
+    "LOST",
+    "ON HOLD",
   ];
 
   return (
