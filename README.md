@@ -59,11 +59,6 @@ export default {
   primary: "#2f50c1",
   secondary: "#F4F2F8",
   textPrimary: "#888",
-  textSecondary: "#a7a3b3",
-  background: "#ffffff",
-  filterButtonText: "#a7a3b3",
-  scanButtonText: "#ffffff",
-  markAllText: "blue",
 };
 ```
 
