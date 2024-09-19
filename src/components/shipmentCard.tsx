@@ -42,7 +42,7 @@ const ShipmentCard: React.FC<ShipmentCardProps> = ({
 
         <TouchableOpacity>
           <Text
-            style={
+            style={[
               item.status === "RECEIVED"
                 ? styles.receivedStatus
                 : item.status === "CANCELLED"
@@ -53,8 +53,9 @@ const ShipmentCard: React.FC<ShipmentCardProps> = ({
                 ? styles.deliveredStatus
                 : item.status === "ON HOLD"
                 ? styles.onHoldStatus
-                : null
-            }
+                : null,
+              styles.statusContainer,
+            ]}
           >
             {item.status}
           </Text>
@@ -155,11 +156,9 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: colors.darkGray,
   },
-  receivedStatus: {
-    color: colors.blue,
+  statusContainer: {
     fontWeight: "bold",
     marginRight: 8,
-    backgroundColor: colors.lightBlue,
     fontSize: 12,
     paddingVertical: 6,
     paddingHorizontal: 10,
@@ -167,58 +166,26 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: colors.white,
     textAlign: "center",
+  },
+  receivedStatus: {
+    color: colors.blue,
+    backgroundColor: colors.lightBlue,
   },
   canceledStatus: {
     backgroundColor: colors.lightGray,
     color: colors.darkGray,
-    fontWeight: "bold",
-    marginRight: 8,
-    fontSize: 12,
-    paddingVertical: 6,
-    paddingHorizontal: 10,
-    borderRadius: 8,
-    borderWidth: 1,
-    borderColor: colors.white,
-    textAlign: "center",
   },
   errorStatus: {
     backgroundColor: colors.lightRed,
     color: colors.red,
-    fontWeight: "bold",
-    marginRight: 8,
-    fontSize: 12,
-    paddingVertical: 6,
-    paddingHorizontal: 10,
-    borderRadius: 8,
-    borderWidth: 1,
-    borderColor: colors.white,
-    textAlign: "center",
   },
   deliveredStatus: {
     backgroundColor: colors.lightGreen,
     color: colors.green,
-    fontWeight: "bold",
-    marginRight: 8,
-    fontSize: 12,
-    paddingVertical: 6,
-    paddingHorizontal: 10,
-    borderRadius: 8,
-    borderWidth: 1,
-    borderColor: colors.white,
-    textAlign: "center",
   },
   onHoldStatus: {
     backgroundColor: colors.lightOrange,
     color: colors.orange,
-    fontWeight: "bold",
-    marginRight: 8,
-    fontSize: 12,
-    paddingVertical: 6,
-    paddingHorizontal: 10,
-    borderRadius: 8,
-    borderWidth: 1,
-    borderColor: colors.white,
-    textAlign: "center",
   },
   expandButton: {
     marginLeft: 8,
@@ -226,7 +193,6 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 20,
   },
-
   detailsContainer: {
     backgroundColor: colors.lightGray,
     padding: 10,
@@ -246,11 +212,11 @@ const styles = StyleSheet.create({
   },
   moreShipmentDetailsText: {
     fontSize: 16,
-    color: colors.blue,
+    color: colors.black,
   },
   moreShipmentDetailsStreetText: {
     fontSize: 13,
-    color: colors.blue,
+    color: colors.darkGray,
   },
   contactDetailsContainer: {
     display: "flex",
