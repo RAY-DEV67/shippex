@@ -91,7 +91,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ isVisible, onClose }) => {
                   Please enter your credentials
                 </Text>
                 <InputField
-                  label="Username / Email"
+                  label="Email"
                   name="username"
                   placeholder="Your email"
                 />

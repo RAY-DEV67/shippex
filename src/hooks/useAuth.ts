@@ -23,7 +23,6 @@ const useAuth = () => {
       const data = await response.json();
       if (response.ok) {
         setIsAuthenticated(true);
-        console.log(data);
         const userName = data.full_name;
         await AsyncStorage.setItem("userName", JSON.stringify(userName));
         return data;
