@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import {
   View,
   Text,
@@ -6,6 +6,8 @@ import {
   StyleSheet,
   Alert,
   SafeAreaView,
+  Platform,
+  StatusBar,
 } from "react-native";
 import { Formik } from "formik";
 import * as Yup from "yup";
@@ -49,55 +51,60 @@ const LoginScreen: React.FC = () => {
   };
 
   return (
-    <Formik
-      initialValues={{ url: "", username: "", password: "" }}
-      validationSchema={validationSchema}
-      onSubmit={handleLogin}
-    >
-      {({ handleSubmit, isValid, dirty }) => (
-        <SafeAreaView style={styles.container}>
-          <View style={styles.form}>
-            <View>
-              <Text style={styles.title}>Login</Text>
-              <Text style={styles.subtitle}>
-                Please enter your First, Last name and your phone number in
-                order to register
-              </Text>
-              <InputField
-                label="URL"
-                name="url"
-                placeholder="https://www.example.com"
-                isUrlField // Pass the prop for URL-specific behavior
-              />
-              <InputField
-                label="Username / Email"
-                name="username"
-                placeholder="Your email"
-              />
-              <InputField
-                label="Password"
-                name="password"
-                placeholder="Password"
-                secureTextEntry
+    <Fragment>
+      <StatusBar backgroundColor="#ffffff" barStyle="dark-content" />
+      <Formik
+        initialValues={{ url: "", username: "", password: "" }}
+        validationSchema={validationSchema}
+        onSubmit={handleLogin}
+      >
+        {({ handleSubmit, isValid, dirty }) => (
+          <SafeAreaView style={styles.container}>
+            <View style={styles.form}>
+              <View>
+                <Text style={styles.title}>Login</Text>
+                <Text style={styles.subtitle}>
+                  Please enter your First, Last name and your phone number in
+                  order to register
+                </Text>
+                <InputField
+                  label="URL"
+                  name="url"
+                  placeholder="https://www.example.com"
+                  isUrlField // Pass the prop for URL-specific behavior
+                />
+                <InputField
+                  label="Username / Email"
+                  name="username"
+                  placeholder="Your email"
+                />
+                <InputField
+                  label="Password"
+                  name="password"
+                  placeholder="Password"
+                  secureTextEntry
+                />
+              </View>
+              {/* Use the reusable LoginButton and handle disabled state */}
+              <LoginButton
+                onPress={handleSubmit}
+                disabled={!(isValid && dirty)} // Disable the button if the form is not valid or dirty
+                buttonStyle={
+                  !(isValid && dirty)
+                    ? styles.disabledButton
+                    : styles.loginButton // Apply different styles based on validity
+                }
+                textStyle={
+                  !(isValid && dirty)
+                    ? styles.disabledButtonText
+                    : styles.loginButtonText
+                }
               />
             </View>
-            {/* Use the reusable LoginButton and handle disabled state */}
-            <LoginButton
-              onPress={handleSubmit}
-              disabled={!(isValid && dirty)} // Disable the button if the form is not valid or dirty
-              buttonStyle={
-                !(isValid && dirty) ? styles.disabledButton : styles.loginButton // Apply different styles based on validity
-              }
-              textStyle={
-                !(isValid && dirty)
-                  ? styles.disabledButtonText
-                  : styles.loginButtonText
-              }
-            />
-          </View>
-        </SafeAreaView>
-      )}
-    </Formik>
+          </SafeAreaView>
+        )}
+      </Formik>
+    </Fragment>
   );
 };
 

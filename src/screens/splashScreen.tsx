@@ -1,5 +1,5 @@
-import React, { useEffect, useRef } from "react";
-import { View, StyleSheet, Animated } from "react-native";
+import React, { Fragment, useEffect, useRef } from "react";
+import { View, StyleSheet, Animated, StatusBar } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "../navigations/appNavigator";
@@ -47,20 +47,23 @@ const SplashScreen: React.FC = () => {
   });
 
   return (
-    <View style={styles.container}>
-      <Animated.Image
-        source={require("../../assets/animate.png")}
-        style={[
-          {
-            transform: [
-              { scale: imageScale }, // Apply scale animation
-              { rotateX: rotationX }, // Apply vertical flip (card-like) animation
-            ],
-          },
-        ]}
-        resizeMode="contain"
-      />
-    </View>
+    <Fragment>
+      <StatusBar backgroundColor="#ffffff" barStyle="dark-content" />
+      <View style={styles.container}>
+        <Animated.Image
+          source={require("../../assets/animate.png")}
+          style={[
+            {
+              transform: [
+                { scale: imageScale }, // Apply scale animation
+                { rotateX: rotationX }, // Apply vertical flip (card-like) animation
+              ],
+            },
+          ]}
+          resizeMode="contain"
+        />
+      </View>
+    </Fragment>
   );
 };
 

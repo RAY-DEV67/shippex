@@ -1,5 +1,5 @@
 import FontAwesome from "@expo/vector-icons/FontAwesome";
-import React, { useState } from "react";
+import React, { Fragment, useState } from "react";
 import {
   View,
   Text,
@@ -13,6 +13,7 @@ import {
   Platform,
   LayoutAnimation,
   UIManager,
+  StatusBar,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import Checkbox from "expo-checkbox";
@@ -242,70 +243,73 @@ const ShipmentListScreen: React.FC = () => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
-        <Image source={require("../../assets/avatar.png")} />
-        <Image source={require("../../assets/logoBlue.png")} />
-        <TouchableOpacity style={styles.icon}>
-          <Ionicons name="notifications-outline" size={24} color="#2f50c1" />
-        </TouchableOpacity>
-      </View>
+    <Fragment>
+      <StatusBar backgroundColor="#ffffff" barStyle="dark-content" />
+      <SafeAreaView style={styles.container}>
+        <View style={styles.header}>
+          <Image source={require("../../assets/avatar.png")} />
+          <Image source={require("../../assets/logoBlue.png")} />
+          <TouchableOpacity style={styles.icon}>
+            <Ionicons name="notifications-outline" size={24} color="#2f50c1" />
+          </TouchableOpacity>
+        </View>
 
-      <View style={styles.userInfo}>
-        <Text style={styles.greeting}>Hello,</Text>
-        <Text style={styles.username}>Ibrahim Shaker</Text>
-      </View>
+        <View style={styles.userInfo}>
+          <Text style={styles.greeting}>Hello,</Text>
+          <Text style={styles.username}>Ibrahim Shaker</Text>
+        </View>
 
-      <View>
-        <TouchableOpacity style={styles.searchIcon}>
-          <Ionicons name="search" size={20} color="#a7a3b3" />
-        </TouchableOpacity>
-        <TextInput style={styles.searchInput} placeholder="Search" />
-      </View>
+        <View>
+          <TouchableOpacity style={styles.searchIcon}>
+            <Ionicons name="search" size={20} color="#a7a3b3" />
+          </TouchableOpacity>
+          <TextInput style={styles.searchInput} placeholder="Search" />
+        </View>
 
-      <View style={styles.searchFilterContainer}>
-        <TouchableOpacity
-          style={styles.filterButton}
-          onPress={() => setFilterModalVisible(true)}
-        >
-          <Ionicons name="filter-outline" size={20} color="#a7a3b3" />
-          <Text style={styles.filterText}>Filters</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.scanButton}>
-          <Ionicons name="scan-outline" size={20} color="white" />
-          <Text style={styles.scanText}>Add Scan</Text>
-        </TouchableOpacity>
-      </View>
+        <View style={styles.searchFilterContainer}>
+          <TouchableOpacity
+            style={styles.filterButton}
+            onPress={() => setFilterModalVisible(true)}
+          >
+            <Ionicons name="filter-outline" size={20} color="#a7a3b3" />
+            <Text style={styles.filterText}>Filters</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.scanButton}>
+            <Ionicons name="scan-outline" size={20} color="white" />
+            <Text style={styles.scanText}>Add Scan</Text>
+          </TouchableOpacity>
+        </View>
 
-      <View style={styles.shipmentsHeader}>
-        <Text style={styles.shipmentsTitle}>Shipments</Text>
-        <TouchableOpacity onPress={handleMarkAll}>
-          <Text style={styles.markAllText}>
-            {selectedShipments.length === shipments.length
-              ? "Unmark All"
-              : "Mark All"}
-          </Text>
-        </TouchableOpacity>
-      </View>
+        <View style={styles.shipmentsHeader}>
+          <Text style={styles.shipmentsTitle}>Shipments</Text>
+          <TouchableOpacity onPress={handleMarkAll}>
+            <Text style={styles.markAllText}>
+              {selectedShipments.length === shipments.length
+                ? "Unmark All"
+                : "Mark All"}
+            </Text>
+          </TouchableOpacity>
+        </View>
 
-      <FlatList
-        data={shipments}
-        keyExtractor={(item) => item.id}
-        renderItem={renderShipment}
-        style={styles.shipmentsList}
-        refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-        }
-      />
+        <FlatList
+          data={shipments}
+          keyExtractor={(item) => item.id}
+          renderItem={renderShipment}
+          style={styles.shipmentsList}
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }
+        />
 
-      {/* Render the FilterModal */}
-      <FilterModal
-        isVisible={filterModalVisible}
-        onClose={() => setFilterModalVisible(false)}
-        selectedFilter={selectedFilter}
-        onToggleFilter={toggleFilterSelection}
-      />
-    </SafeAreaView>
+        {/* Render the FilterModal */}
+        <FilterModal
+          isVisible={filterModalVisible}
+          onClose={() => setFilterModalVisible(false)}
+          selectedFilter={selectedFilter}
+          onToggleFilter={toggleFilterSelection}
+        />
+      </SafeAreaView>
+    </Fragment>
   );
 };
 
@@ -317,9 +321,7 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: "row",
     alignItems: "center",
-    paddingHorizontal: 16,
-    paddingTop: 40,
-    paddingBottom: 16,
+    padding: 16,
     justifyContent: "space-between",
   },
   profilePic: {

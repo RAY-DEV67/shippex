@@ -1,5 +1,5 @@
-import React from "react";
-import { View, Image, StyleSheet } from "react-native";
+import React, { Fragment } from "react";
+import { View, Image, StyleSheet, StatusBar } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import LoginButton from "../components/buttons/loginButton";
 import { StackNavigationProp } from "@react-navigation/stack";
@@ -14,21 +14,27 @@ const Onboarding: React.FC = () => {
   const navigation = useNavigation<LoginScreenNavigationProp>();
 
   return (
-    <View style={styles.container}>
-      <View style={styles.logoContainer}>
-        <Image source={require("../../assets/logo.png")} resizeMode="contain" />
-      </View>
+    <Fragment>
+      <StatusBar backgroundColor="#1E56D1" barStyle="light-content" />
+      <View style={styles.container}>
+        <View style={styles.logoContainer}>
+          <Image
+            source={require("../../assets/logo.png")}
+            resizeMode="contain"
+          />
+        </View>
 
-      <View style={styles.buttonContainer}>
-        <LoginButton
-          onPress={() => {
-            navigation.replace("Login");
-          }}
-          buttonStyle={styles.whiteButton} 
-          textStyle={styles.blackButtonText} 
-        />
+        <View style={styles.buttonContainer}>
+          <LoginButton
+            onPress={() => {
+              navigation.replace("Login");
+            }}
+            buttonStyle={styles.whiteButton}
+            textStyle={styles.blackButtonText}
+          />
+        </View>
       </View>
-    </View>
+    </Fragment>
   );
 };
 
@@ -50,7 +56,7 @@ const styles = StyleSheet.create({
     paddingBottom: 40,
   },
   whiteButton: {
-    backgroundColor: "#fff", 
+    backgroundColor: "#fff",
   },
   blackButtonText: {
     color: "#000",
