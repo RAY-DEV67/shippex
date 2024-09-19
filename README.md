@@ -18,7 +18,7 @@ This project is a shipment management mobile application that allows users to vi
 Clone the repository:
 
 ```bash
-git clone https://github.com/your-repository/shipment-app.git
+git clone https://github.com/RAY-DEV67/shippex
 cd shipment-app
 ```
 
