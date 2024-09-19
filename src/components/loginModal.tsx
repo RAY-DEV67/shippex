@@ -48,7 +48,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ isVisible, onClose }) => {
   }) => {
     try {
       await login(values.username, values.password);
-
+      onClose();
       ToastFunction("success", `Login Successful`, `Welcome Back`);
       navigation.reset({
         index: 0,

@@ -1,3 +1,4 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useState } from "react";
 
 const useAuth = () => {
@@ -23,6 +24,8 @@ const useAuth = () => {
       if (response.ok) {
         setIsAuthenticated(true);
         console.log(data);
+        const userName = data.full_name;
+        await AsyncStorage.setItem("userName", JSON.stringify(userName));
         return data;
       } else {
         throw new Error(data.message || "Login failed");

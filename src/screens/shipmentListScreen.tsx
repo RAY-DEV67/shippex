@@ -1,5 +1,5 @@
 import FontAwesome from "@expo/vector-icons/FontAwesome";
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -19,6 +19,7 @@ import { Ionicons } from "@expo/vector-icons";
 import Checkbox from "expo-checkbox";
 import FilterModal from "../components/filterModal";
 import { useShipments } from "../hooks/useShipments";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 // Enable layout animation on Android
 if (
@@ -85,6 +86,18 @@ const ShipmentListScreen: React.FC = () => {
   const [expandedShipmentIds, setExpandedShipmentIds] = useState<string[]>([]);
   const [filterModalVisible, setFilterModalVisible] = useState(false);
   const [selectedFilter, setSelectedFilter] = useState<string[]>([]);
+  const [userDetails, setUserDetails] = useState<string[]>([]);
+
+  useEffect(() => {
+    const fetchUserDetails = async () => {
+      const userDetailsJson = await AsyncStorage.getItem("userName");
+      if (userDetailsJson) {
+        setUserDetails(JSON.parse(userDetailsJson));
+      }
+    };
+
+    fetchUserDetails();
+  }, []);
 
   const toggleShipmentSelection = (id: string) => {
     if (selectedShipments.includes(id)) {
@@ -259,7 +272,7 @@ const ShipmentListScreen: React.FC = () => {
 
         <View style={styles.userInfo}>
           <Text style={styles.greeting}>Hello,</Text>
-          <Text style={styles.username}>Ibrahim Shaker</Text>
+          <Text style={styles.username}>{userDetails}</Text>
         </View>
 
         <View>
