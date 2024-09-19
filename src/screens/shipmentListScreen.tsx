@@ -30,7 +30,7 @@ if (
 }
 
 const ShipmentListScreen: React.FC = () => {
-  const shipments = ShipmentsData;
+  const shipments = ShipmentsData; //Used a mock data as the current API response is does not correlate with the design.
   const [selectedShipments, setSelectedShipments] = useState<string[]>([]);
   const [refreshing, setRefreshing] = useState(false);
   const [expandedShipmentIds, setExpandedShipmentIds] = useState<string[]>([]);
