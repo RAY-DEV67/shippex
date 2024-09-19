@@ -18,6 +18,7 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 import Checkbox from "expo-checkbox";
 import FilterModal from "../components/filterModal";
+import { useShipments } from "../hooks/useShipments";
 
 // Enable layout animation on Android
 if (
@@ -76,7 +77,9 @@ const shipmentsData = [
 ];
 
 const ShipmentListScreen: React.FC = () => {
-  const [shipments, setShipments] = useState(shipmentsData);
+  // const { shipments, loading, error, refetch } = useShipments(); // Response from API Calldoes not match UI in figma file
+
+  const shipments = shipmentsData;
   const [selectedShipments, setSelectedShipments] = useState<string[]>([]);
   const [refreshing, setRefreshing] = useState(false);
   const [expandedShipmentIds, setExpandedShipmentIds] = useState<string[]>([]);
