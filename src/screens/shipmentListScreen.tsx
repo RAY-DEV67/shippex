@@ -19,7 +19,7 @@ import FilterModal from "../components/filterModal";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { ShipmentsData } from "../json/shipments";
 import ShipmentCard from "../components/shipmentCard";
-import colors from "../const/colors"; 
+import colors from "../const/colors";
 
 // Enable layout animation on Android
 if (
